@@ -1,0 +1,6 @@
+# Las salvas (copias de seguridad) traen usuarios y datos: NUNCA subirlas a GitHub
+salva-*.json
+*.salva.json
+node_modules/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,40 @@
+SISTEMA CONTABLE - como esta organizado
+=======================================
+index.html              -> pagina principal (abrela con doble clic)
+css/estilos.css         -> colores y diseno (incluye la vista de celular)
+manifest.json, sw.js    -> permiten instalar el sistema en el celular
+icons/                  -> iconos de la app
+js/datos.js             -> LISTA DEL MENU y botones (aqui se agregan secciones)
+js/bd.js                -> BASE DE DATOS (guarda todo; base de la salva)
+js/seguridad.js         -> usuarios, contrasenas, accesos y sesion
+js/app.js               -> motor (menu, accesos y cambio de pantallas)
+js/modulos/             -> UN archivo por seccion
+   configuracion.js     -> ya hecho (los 5 botones)
+   usuario.js           -> ya hecho (Configuracion > Usuario)
+   salva.js             -> ya hecho (guardar e importar la salva)
+   (inventario.js, facturacion.js, ... se iran creando)
+
+BASE DE DATOS Y SALVA:
+Todo se guarda en la base de datos del navegador (IndexedDB), no en un servidor.
+Cada modulo nuevo guarda lo suyo asi:  BD.guardar("inventario", datos)  y lo lee con
+BD.leer("inventario", []).  Lo que se guarde asi entra solo en la salva.
+HAZ SALVAS SEGUIDO (Configuracion > Salva): si se borran los datos del navegador, se pierde todo.
+Para pasar el sistema a otra computadora: guardar salva aqui, importarla alla.
+
+PRIMERA VEZ: el sistema pide crear el usuario administrador.
+
+SI SE OLVIDA LA CONTRASENA DEL UNICO ADMINISTRADOR:
+Para empezar de cero hay que borrar los datos del sitio en el navegador, o
+importar una salva anterior si se tiene. Por eso conviene
+tener 2 administradores.
+
+Para hacer una seccion nueva (ej. Inventario):
+1. Crear js/modulos/inventario.js con Sistema.registrar("inventario", ...)
+2. Anadir su <script> en index.html
+Mientras no exista su archivo, la seccion dice "Estas en ... en construccion".
+
+CELULAR:
+Se adapta solo a pantallas chicas. Para instalarlo hay que abrirlo desde una direccion https
+(por ejemplo GitHub Pages, ver README.md). Los datos del celular son SEPARADOS de los de la
+computadora: para pasarlos se usa Configuracion > Salva.
+Si cambias archivos y el celular sigue mostrando lo viejo, sube el numero de CACHE en sw.js.

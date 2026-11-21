@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Contable LSA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Sistema Contable LSA</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <!-- Pantalla de acceso (usuario y contraseña) -->
+  <div id="acceso" class="acceso" hidden></div>
+
+  <div class="app" hidden>
+    <main class="contenido" id="contenido"></main>
+    <aside class="menu">
+      <a class="logo" href="#configuracion" title="Inicio">
+        <span class="logo-texto">Sistema Contable <b>LSA</b></span>
+      </a>
+      <button class="hamb" id="btn-menu" type="button" aria-expanded="false" aria-controls="menu">
+        <svg class="i-barras" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="i-x" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        <span>Menú</span>
+      </button>
+      <nav id="menu"></nav>
+      <div class="sesion" id="sesion"></div>
+    </aside>
+  </div>
+
+  <!-- Orden de carga: datos -> iconos -> seguridad -> motor -> módulos -->
+  <script src="js/datos.js"></script>
+  <script src="js/iconos.js"></script>
+  <script src="js/bd.js"></script>
+  <script src="js/seguridad.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/modulos/configuracion.js"></script>
+  <script src="js/modulos/usuario.js"></script>
+  <script src="js/modulos/salva.js"></script>
+  <!-- Para agregar un módulo nuevo: crea js/modulos/NOMBRE.js y añade su <script> aquí -->
+  <!-- Primero se abre la base de datos y después arranca el sistema -->
+  <script>BD.abrir().then(function () { Sistema.iniciar(); }, function () { Sistema.iniciar(); });</script>
+  <!-- Instalación en el celular (solo funciona desde https, p. ej. GitHub Pages) -->
+  <script>
+    if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
+      window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js"); });
+    }
+  </script>
+</body>
+</html>
